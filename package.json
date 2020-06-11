@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/TeleworkInc/enable-browser-mode#readme",
   "dependencies": {
+    "callsite": "^1.0.0",
     "enable-window-document": "^1.13.0"
   }
 }
