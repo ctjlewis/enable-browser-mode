@@ -12,12 +12,10 @@ const DOMWindow = new JSDOM(
 ).window;
 
 // shhh! don't tell the JSDOM team!
-
 for (let property in DOMWindow)
     global[property] = DOMWindow[property];
 
 window = global;
-
 let DEBUG = true;
 
 // offer window.require for importing
