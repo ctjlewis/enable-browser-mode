@@ -5,6 +5,7 @@ const DOMWindow = new JSDOM('<html><body></body></html>', {
 
 // shhh! don't tell the JSDOM team!
 const window = Object.assign(global, DOMWindow);
+global.window = window;
 
 /* TESTING */
 // console.log(window);
@@ -14,12 +15,9 @@ const window = Object.assign(global, DOMWindow);
 // console.log(testing);
 
 const fs = require('fs');
-function windowRequire(file) {
+window.require = function(file) {
     let contents = fs.readFileSync(file, 'utf-8');
     return (function(){
         eval.apply(this, arguments);
     }(contents));
-    // return (1,eval)(contents);
 }
-windowRequire('./test.js')
-console.log(window.test1, global.test2, test3, test4);
