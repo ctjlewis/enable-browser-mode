@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/christiantjl/enable-browser-mode.git"
+    "url": "git+https://github.com/TeleworkInc/enable-browser-mode.git"
   },
   "keywords": [
     "browser",
@@ -19,7 +19,10 @@
   "author": "Christian Lewis <hello@trytelework.com>",
   "license": "SEE LICENSE IN .LICENSE/LICENSE",
   "bugs": {
-    "url": "https://github.com/christiantjl/enable-browser-mode/issues"
+    "url": "https://github.com/TeleworkInc/enable-browser-mode/issues"
   },
-  "homepage": "https://github.com/christiantjl/enable-browser-mode#readme"
+  "homepage": "https://github.com/TeleworkInc/enable-browser-mode#readme",
+  "dependencies": {
+    "enable-window-document": "^1.13.0"
+  }
 }
