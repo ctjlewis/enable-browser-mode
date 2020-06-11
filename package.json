@@ -1,0 +1,25 @@
+{
+  "name": "enable-browser-mode",
+  "version": "1.0.0",
+  "description": "Simulate the browser with ease by setting the global object to a JSDOM window and painlessly run browser JS without errors.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christiantjl/enable-browser-mode.git"
+  },
+  "keywords": [
+    "browser",
+    "compatibility",
+    "document",
+    "window"
+  ],
+  "author": "Christian Lewis <hello@trytelework.com>",
+  "license": "SEE LICENSE IN .LICENSE/LICENSE",
+  "bugs": {
+    "url": "https://github.com/christiantjl/enable-browser-mode/issues"
+  },
+  "homepage": "https://github.com/christiantjl/enable-browser-mode#readme"
+}
