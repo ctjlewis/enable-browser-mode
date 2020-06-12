@@ -2,11 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const callsite = require('callsite');
 
-
-const compiler = require('google-closure-compiler').compiler;
-const SimpleCompiler = new compiler({
-    compilation_level: 'SIMPLE'
-});
+const Compiler = require('google-closure-compiler').jsCompiler;
 
 /**
  * setup JSDOM window, include
@@ -64,8 +60,15 @@ global.nativeEval = nativeEval;
  * https://stackoverflow.com/questions/62335897/can-eval-be-used-to-declare-multiple-global-classes
  */
 
-const compileIncludeScript = (script) => {
-    return script;
+const compileIncludeScript = (script, fileName) => {
+
+    const closureCompiler = new Compiler({
+        compilation_level: 'SIMPLE'
+      });
+       
+    return closureCompiler.run([{
+        src: script
+    }]).compiledCode;
 }
 
 /**
@@ -90,7 +93,7 @@ window.include = function (file) {
     if (DEBUG)
         console.log("WINDOW.INCLUDE:", { caller, callerDir, fileName });
 
-    fileContents = compileIncludeScript(fileContents);    
+    fileContents = compileIncludeScript(fileContents, fileName);    
 
     /**
      * Use NodeJS `eval()` to execute

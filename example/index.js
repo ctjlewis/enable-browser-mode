@@ -13,5 +13,5 @@ console.log("PASSED JQUERY TEST:", $ === window.$ && window.$ === global.$);
 // console.log('Adding event listener', DOMWindow.addEventListener('load', console.log).bind(DOMWindow));
 
 console.log("Trying to load web-widgets...");
-window.include('./widgets.cc.js');
+window.include('./widgets.js');
 console.log(Widget);
