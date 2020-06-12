@@ -14,13 +14,13 @@ const DOMWindow = new JSDOM(
 const nativeEval = global.eval;
 
 // shhh! don't tell the JSDOM team!
-for (let property in DOMWindow)
-    if (typeof DOMWindow[property] === "function") {
-        console.log('adding and binding', property);
-        global[property] = DOMWindow[property].bind(DOMWindow);
-    }
-    else
-        global[property] = DOMWindow[property];
+for (let prop in DOMWindow) {
+    let val = DOMWindow[prop];
+    
+    global[prop] = (typeof val === "function")
+        ? val.bind(DOMWindow)
+        : val;
+}
 
 global.window = global;
 global.nativeEval = nativeEval;

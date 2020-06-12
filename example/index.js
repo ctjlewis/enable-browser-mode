@@ -16,6 +16,6 @@ console.log('document.addEventListener:', document.addEventListener);
 // console.log(testerino);
 
 console.log("Trying to load jQuery:");
-window.require('./jquery.cc.js');
-// console.log($, window.$, global.$);
+window.require('./jquery.min.js');
+console.log($, window.$, global.$);
 // console.log('Adding event listener', DOMWindow.addEventListener('load', console.log).bind(DOMWindow));
