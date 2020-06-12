@@ -341,5 +341,3 @@ function Render(STACK) {
     console.log("Full rollout took", Date.now() - LOAD_START, "ms");
     return true;
 }
-
-function testerino(){}

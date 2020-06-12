@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const callsite = require('callsite');
+const { Script } = require('vm');
 
-const Compiler = require('google-closure-compiler').jsCompiler;
+// const Compiler = require('google-closure-compiler').jsCompiler;
 
 /**
  * setup JSDOM window, include
@@ -49,27 +50,6 @@ for (let prop in DOMWindow) {
  */
 
 global.window = global;
-global.nativeEval = nativeEval;
-
-/**
- * Need to run include() scripts
- * through CC first because class
- * declarations are the ONLY thing
- * that don't play nice.
- * 
- * https://stackoverflow.com/questions/62335897/can-eval-be-used-to-declare-multiple-global-classes
- */
-
-const compileIncludeScript = (script, fileName) => {
-
-    const closureCompiler = new Compiler({
-        compilation_level: 'SIMPLE'
-      });
-       
-    return closureCompiler.run([{
-        src: script
-    }]).compiledCode;
-}
 
 /**
  * offer `include()` for importing scripts
@@ -93,16 +73,14 @@ window.include = function (file) {
     if (DEBUG)
         console.log("WINDOW.INCLUDE:", { caller, callerDir, fileName });
 
-    fileContents = compileIncludeScript(fileContents, fileName);    
-
     /**
-     * Use NodeJS `eval()` to execute
-     * given script in global context
+     * vm.Script.runInThisContext to the rescue!
+     * eval() would not set lexical globals:
+     * 
+     * https://stackoverflow.com/questions/62335897/can-eval-be-used-to-declare-multiple-global-classes/62353952#62353952
      */
 
-    return (function () {
-        nativeEval.apply(this, arguments);
-    })(fileContents);
+    new Script(fileContents).runInThisContext();
 
 }
 
@@ -112,3 +90,20 @@ if (DEBUG) {
     console.log("2/3", global.testing);
     console.log("3/3", testing);
 }
+
+/**
+ * Moving compileScript to bottom of file
+ * in case needed later.
+ */
+
+// const compileScript = (script) => {
+
+//     const closureCompiler = new Compiler({
+//         compilation_level: 'SIMPLE'
+//     });
+       
+//     return closureCompiler.run([{
+//         src: script
+//     }]).compiledCode;
+
+// }
