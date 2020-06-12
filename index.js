@@ -3,8 +3,6 @@ const path = require('path');
 const callsite = require('callsite');
 const { Script } = require('vm');
 
-// const Compiler = require('google-closure-compiler').jsCompiler;
-
 /**
  * setup JSDOM window, include
  * `url` in config so localStorage
@@ -90,20 +88,3 @@ if (DEBUG) {
     console.log("2/3", global.testing);
     console.log("3/3", testing);
 }
-
-/**
- * Moving compileScript to bottom of file
- * in case needed later.
- */
-
-// const compileScript = (script) => {
-
-//     const closureCompiler = new Compiler({
-//         compilation_level: 'SIMPLE'
-//     });
-       
-//     return closureCompiler.run([{
-//         src: script
-//     }]).compiledCode;
-
-// }
