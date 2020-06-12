@@ -25,13 +25,11 @@ for (let prop in DOMWindow) {
 global.window = global;
 global.nativeEval = nativeEval;
 
-console.log('Adding event listener', window.addEventListener('load', console.log))
-
-let DEBUG = true;
+let DEBUG = false;
 
 // offer window.require for iporting
 // browser JS
-window.require = function(file) {
+window.include = function(file) {
 
     let stack = callsite(),
         caller = stack[1].getFileName(),
@@ -40,7 +38,7 @@ window.require = function(file) {
         fileContents = fs.readFileSync(fileName, 'utf-8');
 
     if(DEBUG)
-        console.log({ caller, callerDir, fileName });
+        console.log("WINDOW.REQUIRE:", { caller, callerDir, fileName });
         
     return (function(){
         nativeEval.apply(this, arguments);
