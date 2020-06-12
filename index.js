@@ -2,6 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const callsite = require('callsite');
 
+
+const compiler = require('google-closure-compiler').compiler;
+const SimpleCompiler = new compiler({
+    compilation_level: 'SIMPLE'
+});
+
 /**
  * setup JSDOM window, include
  * `url` in config so localStorage
@@ -50,11 +56,24 @@ global.window = global;
 global.nativeEval = nativeEval;
 
 /**
+ * Need to run include() scripts
+ * through CC first because class
+ * declarations are the ONLY thing
+ * that don't play nice.
+ * 
+ * https://stackoverflow.com/questions/62335897/can-eval-be-used-to-declare-multiple-global-classes
+ */
+
+const compileIncludeScript = (script) => {
+    return script;
+}
+
+/**
  * offer `include()` for importing scripts
  * inline, in global context
  */
 
-window.include = function(file) {
+window.include = function (file) {
 
     /**
      * handle relative filepaths
@@ -68,17 +87,19 @@ window.include = function(file) {
         fileName = path.resolve(callerDir, file),
         fileContents = fs.readFileSync(fileName, 'utf-8');
 
-    if(DEBUG)
+    if (DEBUG)
         console.log("WINDOW.INCLUDE:", { caller, callerDir, fileName });
-        
+
+    fileContents = compileIncludeScript(fileContents);    
+
     /**
      * Use NodeJS `eval()` to execute
      * given script in global context
      */
 
-    return (function(){
+    return (function () {
         nativeEval.apply(this, arguments);
-    }(fileContents));
+    })(fileContents);
 
 }
 
