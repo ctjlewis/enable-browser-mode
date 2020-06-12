@@ -15,11 +15,17 @@ const nativeEval = global.eval;
 
 // shhh! don't tell the JSDOM team!
 for (let property in DOMWindow)
-    global[property] = DOMWindow[property];
+    if (typeof DOMWindow[property] === "function") {
+        console.log('adding and binding', property);
+        global[property] = DOMWindow[property].bind(DOMWindow);
+    }
+    else
+        global[property] = DOMWindow[property];
 
-window = global;
+global.window = global;
 global.nativeEval = nativeEval;
-global.DOMWindow = DOMWindow;
+
+console.log('Adding event listener', window.addEventListener('load', console.log))
 
 let DEBUG = true;
 
