@@ -11,14 +11,19 @@ const DOMWindow = new JSDOM(
     }
 ).window;
 
+const nativeEval = global.eval;
+
 // shhh! don't tell the JSDOM team!
 for (let property in DOMWindow)
     global[property] = DOMWindow[property];
 
 window = global;
+global.nativeEval = nativeEval;
+global.DOMWindow = DOMWindow;
+
 let DEBUG = true;
 
-// offer window.require for importing
+// offer window.require for iporting
 // browser JS
 window.require = function(file) {
 
@@ -32,7 +37,7 @@ window.require = function(file) {
         console.log({ caller, callerDir, fileName });
         
     return (function(){
-        eval.apply(this, arguments);
+        nativeEval.apply(this, arguments);
     }(fileContents));
 
 }
