@@ -4,9 +4,10 @@ const callsite = require('callsite');
 
 /**
  * setup JSDOM window, include
- * url in config so localStorage
+ * `url` in config so localStorage
  * does not complain
  */
+
 const { JSDOM } = require('jsdom');
 const DOMWindow = new JSDOM(
     '<!DOCTYPE html><html><body></body></html>',
@@ -17,27 +18,39 @@ const DOMWindow = new JSDOM(
 ).window;
 
 const nativeEval = global.eval;
+const DEBUG = false;
 
 /**
  * shhhh! don't tell the JSDOM team!
  */
+
 for (let prop in DOMWindow) {
+
     let val = DOMWindow[prop];
-    global[prop] = (typeof val === "function")
-        ? val.bind(DOMWindow)
-        : val;
+
+    /**
+     * iterate over `window` properties,
+     * and set them on `global` if they
+     * do not already exist 
+     */
+
+    if (prop in global) continue;
+
+    else if (typeof val === "function")
+        global[prop] = val.bind(DOMWindow);
+
+    else global[prop] = val;
 }
 
 /**
- * setup global = window self-reference
+ * setup `global = window` self-reference
  */
+
 global.window = global;
 global.nativeEval = nativeEval;
 
-let DEBUG = false;
-
 /**
- * offer include() for importing scripts
+ * offer `include()` for importing scripts
  * inline, in global context
  */
 
@@ -46,7 +59,7 @@ window.include = function(file) {
     /**
      * handle relative filepaths
      * need to get caller function with
-     * callsite[1].getFileName()
+     * `callsite[1].getFileName()`
      */
 
     let stack = callsite(),
@@ -59,7 +72,7 @@ window.include = function(file) {
         console.log("WINDOW.INCLUDE:", { caller, callerDir, fileName });
         
     /**
-     * Use NodeJS eval() to execute
+     * Use NodeJS `eval()` to execute
      * given script in global context
      */
 
