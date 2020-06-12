@@ -25,14 +25,15 @@ const DEBUG = false;
  * shhhh! don't tell the JSDOM team!
  */
 
-for (let prop in DOMWindow) {
-
-    let val = DOMWindow[prop];
+for (const prop in DOMWindow) {
+    const val = DOMWindow[prop];
 
     /**
      * iterate over `window` properties,
      * and set them on `global` if they
-     * do not already exist 
+     * do not already exist.
+     * 
+     * bind functions to DOMWindow.
      */
 
     if (prop in global) continue;
