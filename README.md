@@ -12,7 +12,12 @@ require('enable-browser-mode');
 import 'enable-browser-mode'
 ```
 
-No variable assignment required, just call it!  The variables are stored on the `global` object so you can refer to them as you normally would in browser JS.
+No variable assignment required, just call it! You can then require browser JS with:
+```
+include('./jquery.min.js');
+```
+
+Which will evaluate that script in the global context. (**Make sure the scripts supplied to `window.include()` are trusted.**) 
 
 ## Example
 Won't work:
