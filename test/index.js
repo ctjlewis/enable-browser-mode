@@ -8,7 +8,7 @@ console.log('window.addEventListener:', window.addEventListener);
 console.log('document.addEventListener:', document.addEventListener);
 
 console.log("Trying to load jQuery:");
-window.include('./jquery.js');
+window.include('./jquery.min.js');
 console.log("PASSED JQUERY TEST:", $ === window.$ && window.$ === global.$);
 // console.log('Adding event listener', DOMWindow.addEventListener('load', console.log).bind(DOMWindow));
 
