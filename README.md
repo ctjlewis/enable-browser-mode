@@ -4,12 +4,12 @@ The goal of this package is to work as a quick-and-dirty one-liner that will all
 
 ```
 /* [CommonJS] */
-require('enable-window-document');
+require('enable-browser-mode');
 ```
 *- or -*
 ```
 /* [ES6] */
-import 'enable-window-document'
+import 'enable-browser-mode'
 ```
 
 No variable assignment required, just call it!  The variables are stored on the `global` object so you can refer to them as you normally would in browser JS.
@@ -25,7 +25,7 @@ console.log(document.createElement('a'));
 
 Works like a charm:
 ```
-require('enable-window-document');
+require('enable-browser-mode');
 console.log(document.createElement('a'));
 
 >   HTMLAnchorElement {Symbol(impl): HTMLAnchorElementImpl}
@@ -38,7 +38,7 @@ By importing this package (which depends on JSDOM), we can expose the `window` a
 
  In Node, `web-widgets` builds out the widget tree on the virtual DOM and then exports it as flat HTML using the `Node.outerHTML` property, and in the browser, the DOM is manipulated directly on-the-fly (i.e. with `Node.appendChild`). With `enable-browser-window`, all that is needed to reuse the original browser library is creating an separate JS file for Node, importing this package, and then importing your browser code:
  ```
- require('enable-window-document');
+ require('enable-browser-mode');
  require('browser.js');
  myBrowserObject.doBrowserStuff(); 
 

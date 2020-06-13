@@ -21,6 +21,8 @@ const DOMWindow = new JSDOM(
 
 for (const prop in DOMWindow) {
 
+    const val = DOMWindow[prop];
+
     /**
      * iterate over `window` properties,
      * and set them on `global` if they
@@ -29,8 +31,6 @@ for (const prop in DOMWindow) {
      * 
      * shhh! don't tell the JSDOM team!
      */
-
-    const val = DOMWindow[prop];
 
     if (prop in global) continue;
 
