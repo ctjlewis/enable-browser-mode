@@ -1,6 +1,6 @@
 {
   "name": "enable-browser-mode",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Simulate the browser with ease by setting the global object to a JSDOM window and painlessly run browser JS without errors.",
   "main": "index.js",
   "scripts": {
