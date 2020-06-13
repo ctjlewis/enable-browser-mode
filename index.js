@@ -15,6 +15,8 @@ const DOMWindow = new JSDOM(
     '<!DOCTYPE html><html><body></body></html>',
     {
         url: "https://localhost",
+        resources: 'usable',
+        runScripts: 'dangerously',
         pretendToBeVisual: true
     }
 ).window;
