@@ -41,22 +41,19 @@ for (const prop in DOMWindow) {
 }
 
 /**
- * setup `global = window` self-reference
+ * setup `global = window`self-reference
  */
 
 global.window = global;
 
 /**
- * offer `include()` for importing scripts
- * inline, in global context
+ * offer for importing scripts
+ * inline, in global context.
  */
 
 window.include = function (file) {
 
     /**
-     * offer for importing scripts
-     * inline, in global context.
-     * 
      * handle relative filepaths
      * need to get caller function with
      * `callsite[1].getFileName()`
