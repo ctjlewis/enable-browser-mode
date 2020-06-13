@@ -1,6 +1,6 @@
 # Enable browser mode
 
-The goal of this package is to work as a quick-and-dirty one-liner that will allow Node to `require` and otherwise execute traditional browser code without throwing errors.  It also sets the global object to `window`, and aims to simulate the browser as realistically as possible.
+The goal of this package is to work as a quick-and-dirty one-liner that will allow Node to import and otherwise execute traditional browser code without throwing errors.  It also sets the global object to `window`, and aims to simulate the browser as realistically as possible.
 
 ```
 /* [CommonJS] */
