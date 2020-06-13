@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const callsite = require('callsite');
+
+const { JSDOM } = require('jsdom');
 const { Script } = require('vm');
 
 /**
@@ -9,7 +11,6 @@ const { Script } = require('vm');
  * does not complain
  */
 
-const { JSDOM } = require('jsdom');
 const DOMWindow = new JSDOM(
     '<!DOCTYPE html><html><body></body></html>',
     {
@@ -18,23 +19,18 @@ const DOMWindow = new JSDOM(
     }
 ).window;
 
-const nativeEval = global.eval;
-const DEBUG = false;
-
-/**
- * shhhh! don't tell the JSDOM team!
- */
-
 for (const prop in DOMWindow) {
-    const val = DOMWindow[prop];
 
     /**
      * iterate over `window` properties,
      * and set them on `global` if they
-     * do not already exist.
+     * do not already exist, then
+     * bind to DOMWindow.
      * 
-     * bind functions to DOMWindow.
+     * shhh! don't tell the JSDOM team!
      */
+
+    const val = DOMWindow[prop];
 
     if (prop in global) continue;
 
@@ -58,6 +54,9 @@ global.window = global;
 window.include = function (file) {
 
     /**
+     * offer for importing scripts
+     * inline, in global context.
+     * 
      * handle relative filepaths
      * need to get caller function with
      * `callsite[1].getFileName()`
@@ -69,9 +68,6 @@ window.include = function (file) {
         fileName = path.resolve(callerDir, file),
         fileContents = fs.readFileSync(fileName, 'utf-8');
 
-    if (DEBUG)
-        console.log("WINDOW.INCLUDE:", { caller, callerDir, fileName });
-
     /**
      * vm.Script.runInThisContext to the rescue!
      * eval() would not set lexical globals:
@@ -80,12 +76,4 @@ window.include = function (file) {
      */
 
     new Script(fileContents).runInThisContext();
-
-}
-
-if (DEBUG) {
-    testing = "TESTS PASSED";
-    console.log("1/3", window.testing);
-    console.log("2/3", global.testing);
-    console.log("3/3", testing);
 }
