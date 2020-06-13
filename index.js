@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const callsite = require('callsite');
 
-const { JSDOM } = require('jsdom');
 const { Script } = require('vm');
+const { JSDOM } = require('jsdom');
 
 /**
  * setup JSDOM window, include
@@ -41,6 +41,9 @@ for (const prop in DOMWindow) {
 
     else global[prop] = val;
 }
+
+// window.Event workaround
+global.Event = DOMWindow.Event.bind(DOMWindow);
 
 /**
  * setup `global = window`self-reference
