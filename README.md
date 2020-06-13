@@ -49,8 +49,3 @@ By importing this package (which depends on JSDOM), we can expose the `window` a
 
  // code like you're in the browser =)
  ```
-
-## Digressions
-It should really take *zero* extra lines to run browser-compatible JS in Node, but one line will do for now. The important part is that instead of writing everything for Node and then using `browserify` and other tools to polyfill it for the browser, we can write strict code for the browser and force Node to interpret Javascript in the same way the browser does.  
-
-Why the Node runtime does not expose `window` and `document` OOTB is a valid question, as whatever rationale exists behind that decision cannot be more concrete than the principle that code which can execute in a browser should be able to execute in the Node runtime. Javascript output from one environment should === the same Javascript run in another. [It's supposed to be a lingua franca!](https://i.imgur.com/TwkD81I.jpeg)
