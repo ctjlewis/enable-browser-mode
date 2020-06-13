@@ -50,17 +50,6 @@ By importing this package (which depends on JSDOM), we can expose the `window` a
  // code like you're in the browser =)
  ```
 
-## Implementation
-This package simply creates a blank JSDOM with four lines of code, and stores the global `window` and `document` variables, which point to the empty DOM:
-
-```
-let JSDOM = require('jsdom'),
-    DOM = new JSDOM.JSDOM(`<html><body></body></html>`);
-
-global.window = DOM.window,
-global.document = window.document;
-```
-
 ## Digressions
 It should really take *zero* extra lines to run browser-compatible JS in Node, but one line will do for now. The important part is that instead of writing everything for Node and then using `browserify` and other tools to polyfill it for the browser, we can write strict code for the browser and force Node to interpret Javascript in the same way the browser does.  
 
