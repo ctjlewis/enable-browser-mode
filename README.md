@@ -41,7 +41,7 @@ The specific need for this functionality came from the `web-widgets` package, wh
 
 By importing this package (which depends on JSDOM), we can expose the `window` and `document` globals to the whole project, meaning we can write all of our browser-optimized (and DOM-heavy) code in a file like `browser.js`, but still use that same code for server-side rendering in Node with `require('browser.js')`. 
 
- In Node, `web-widgets` builds out the widget tree on the virtual DOM and then exports it as flat HTML using the `Node.outerHTML` property, and in the browser, the DOM is manipulated directly on-the-fly (i.e. with `Node.appendChild`). With `enable-browser-window`, all that is needed to reuse the original browser library is creating an separate JS file for Node, importing this package, and then importing your browser code:
+ In Node, `web-widgets` builds out the widget tree on the virtual DOM and then exports it as flat HTML using the `Node.outerHTML` property, and in the browser, the DOM is manipulated directly on-the-fly (i.e. with `Node.appendChild`). With `enable-browser-mode`, all that is needed to reuse the original browser library is creating an separate JS file for Node, importing this package, and then importing your browser code:
  ```
  require('enable-browser-mode');
  require('browser.js');
@@ -49,3 +49,6 @@ By importing this package (which depends on JSDOM), we can expose the `window` a
 
  // code like you're in the browser =)
  ```
+
+ ## Unsafe Mode
+By default, JSDOM is called with `runScripts: 'outside-only'`. Set `global.UNSAFE_MODE` before your `require('enable-browser-mode')` call to enable dangerous mode and execute external scripts when added to DOM.
