@@ -35,20 +35,22 @@ for (const prop in window) {
  * to be added here. must bind methods!
  */
 
-global.Event = window.Event.bind(window);
+Event = window.Event.bind(window);
+requestAnimationFrame = (fn) => setTimeout(fn, 0);
+cancelAnimationFrame = (key) => clearTimeout(key);
 
 /**
  * setup `global = window` self-reference
  */
 
- global.window = global;
+window = global;
 
 /**
  * offer for importing scripts
  * inline, in global context.
  */
 
-window.include = function (file) {
+include = function (file) {
 
     /**
      * handle relative filepaths
