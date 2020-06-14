@@ -24,3 +24,7 @@ console.log("Trying to load web-widgets...");
 window.include('./widgets.js');
 console.log(Widget);
 console.log('');
+
+console.log("Checking window.Event:")
+console.log(window.Event);
+console.log('');

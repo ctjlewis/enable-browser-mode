@@ -1,57 +1,47 @@
 const fs = require('fs');
 const path = require('path');
 const callsite = require('callsite');
-
 const { Script } = require('vm');
-const { JSDOM } = require('jsdom');
 
 /**
- * setup JSDOM window, include
- * `url` in config so localStorage
- * does not complain
+ * load `window` and `document`
+ * globals
  */
 
-const DOMWindow = new JSDOM(
-    '<!DOCTYPE html><html><body></body></html>',
-    {
-        url: "https://localhost",
-        resources: 'usable',
-        runScripts: global.UNSAFE_MODE 
-            ? 'dangerously' 
-            : 'outside-only',
-        pretendToBeVisual: true
-    }
-).window;
+require('enable-window-document');
 
-for (const prop in DOMWindow) {
+/**
+ * iterate over `window` properties,
+ * and set them on `global` if they
+ * do not already exist, then
+ * bind to DOMWindow.
+ * 
+ * shhh! don't tell the JSDOM team!
+ */
 
-    const val = DOMWindow[prop];
-
-    /**
-     * iterate over `window` properties,
-     * and set them on `global` if they
-     * do not already exist, then
-     * bind to DOMWindow.
-     * 
-     * shhh! don't tell the JSDOM team!
-     */
+for (const prop in window) {
+    const val = window[prop];
 
     if (prop in global) continue;
 
     else if (typeof val === "function")
-        global[prop] = val.bind(DOMWindow);
+        global[prop] = val.bind(window);
 
     else global[prop] = val;
 }
 
-// window.Event workaround
-global.Event = DOMWindow.Event.bind(DOMWindow);
-
 /**
- * setup `global = window`self-reference
+ * Any non-enumerable properties need
+ * to be added here. must bind methods!
  */
 
-global.window = global;
+global.Event = window.Event.bind(window);
+
+/**
+ * setup `global = window` self-reference
+ */
+
+ global.window = global;
 
 /**
  * offer for importing scripts

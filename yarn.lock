@@ -211,6 +211,13 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
+enable-window-document@^1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/enable-window-document/-/enable-window-document-1.19.0.tgz#dc98803612d2111321b2fbf8b7528abde38ab75d"
+  integrity sha512-lbFG7dovu1qWHNBHoAqS2OtxkdJnOMdq4xBKKqPxrEdfaz3UpnXut7QvWPp871JbD6/j9sIGJMUo8UbaQakVtw==
+  dependencies:
+    jsdom "^16.2.2"
+
 escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
