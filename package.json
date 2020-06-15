@@ -1,6 +1,6 @@
 {
   "name": "enable-browser-mode",
-  "version": "1.26.0",
+  "version": "1.27.0",
   "description": "Simulate the browser with ease by setting the global object to a JSDOM window and painlessly run browser JS without errors.",
   "main": "index.js",
   "scripts": {
@@ -24,8 +24,6 @@
   "homepage": "https://github.com/TeleworkInc/enable-browser-mode#readme",
   "dependencies": {
     "callsite": "^1.0.0",
-    "enable-window-document": "^1.19.0",
-    "google-closure-compiler": "^20200517.0.0",
-    "jsdom": "^16.2.2"
+    "enable-window-document": "^1.19.0"
   }
 }
