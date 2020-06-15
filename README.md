@@ -48,7 +48,7 @@ The specific need for this functionality came from the `web-widgets` package, wh
 
 For server-side rendering in Node, `web-widgets` builds out the widget tree on the virtual DOM and then exports it as flat HTML using the `HTMLElement.outerHTML` property; in the browser, the DOM is manipulated directly on-the-fly (i.e. with `HTMLElement.appendChild`). By simulating the browser global, we can use the exact same core library for both cases, the difference being just `Widget.render(HTMLElement)` to render into a DOM element and `Widget.export()` to dump the outerHTML.
 
-Using `enable-browser-mode`, all that is needed to reuse original browser libraries (including jQuery, HammerJS, etc.) is creating an separate JS file for your Node logic, importing this package, and then importing your browser code:
+Using `enable-browser-mode`, all that is needed to reuse original browser libraries (including jQuery, HammerJS, etc.) is creating an separate JS file for your Node logic, importing this package, and then importing your browser code with `include`:
 
 ```
 require('enable-browser-mode');
