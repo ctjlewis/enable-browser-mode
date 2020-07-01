@@ -3,6 +3,8 @@
   "version": "1.29.0",
   "description": "Simulate the browser with ease by setting the global object to a JSDOM window and painlessly run browser JS without errors.",
   "main": "index.js",
+  "preferGlobal": true,
+  "bin": "bin/index.js",
   "scripts": {
     "test": "node test/index.js"
   },
