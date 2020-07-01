@@ -1,0 +1,2 @@
+// echo jQuery
+console.log($);

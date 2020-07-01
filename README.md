@@ -16,9 +16,15 @@ import 'enable-browser-mode'
 No variable assignment required, just call it! You can then require browser JS with:
 
 ```
+/* Node */
 include('./jquery.min.js');
+```
 
-// also available at window.include()
+*- or -*
+
+```
+/* [CLI] */
+$ enable-browser-mode test/jquery.js test/jquery2.js
 ```
 
 Which will evaluate that script in the global context. **Make sure the scripts supplied to `window.include()` are trusted.**
