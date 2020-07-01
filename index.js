@@ -73,3 +73,7 @@ include = function (file) {
 
     new Script(fileContents).runInThisContext();
 }
+
+// export `execute` for CLI ops in Node
+const execute = require('./bin/execute.js');
+module.exports = execute;
