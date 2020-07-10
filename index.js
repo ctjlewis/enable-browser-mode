@@ -75,5 +75,5 @@ include = function (file) {
 }
 
 // export `execute` for CLI ops in Node
-const include = require('./bin/execute.js');
-module.exports = include;
+const execute = require('./bin/execute.js');
+module.exports = execute;
