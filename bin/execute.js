@@ -5,7 +5,7 @@ function execute(...args) {
     console.log('Please provide one or more files to execute.');
 
     for (const arg of args)
-        include(path.resolve(
+        execute(path.resolve(
             process.cwd(),
             arg
         ));
