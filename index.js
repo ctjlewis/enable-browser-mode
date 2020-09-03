@@ -1,40 +1,40 @@
+#!/usr/bin/env node --experimental-modules
+/** @license MIT */
+
 const fs = require('fs');
 const path = require('path');
 const callsite = require('callsite');
-const { Script } = require('vm');
+const vm = require('vm');
 
 /**
- * load `window` and `document`
- * globals
+ * load `window` and `document` globals
  */
 
 require('enable-window-document');
 
 /**
- * iterate over `window` properties,
- * and set them on `global` if they
- * do not already exist, then
- * bind to DOMWindow.
- * 
+ * iterate over `window` properties, and set them on `global` if they do not
+ * already exist, then bind to DOMWindow.
+ *
  * shhh! don't tell the JSDOM team!
  */
 
+// eslint-disable-next-line guard-for-in
 for (const prop in window) {
-    const val = window[prop];
+  const val = window[prop];
 
-    if (prop in global) continue;
+  if (prop in global) continue;
 
-    else if (typeof val === "function")
-        global[prop] = val.bind(window);
+  else if (typeof val === 'function') {
+    global[prop] = val.bind(window);
+  }
 
-    else global[prop] = val;
+  else global[prop] = val;
 }
 
 /**
- * Any non-enumerable properties need
- * to be added here. must bind methods!
+ * Global non-enumerable properties.
  */
-
 Event = window.Event.bind(window);
 requestAnimationFrame = (fn) => setTimeout(fn, 0);
 cancelAnimationFrame = (key) => clearTimeout(key);
@@ -42,38 +42,51 @@ cancelAnimationFrame = (key) => clearTimeout(key);
 /**
  * setup `global = window` self-reference
  */
-
 window = global;
 
 /**
- * offer for importing scripts
- * inline, in global context.
+ * offer for importing scripts inline, in global context. also assign to
+ * include() for backwards compat
+ *
+ * @param {string} file
  */
+include = includeScript = (file) => {
+  /**
+   * handle relative filepaths need to get caller function with
+   * `callsite[1].getFileName()`
+   */
+  const stack = callsite();
+  const caller = stack[1].getFileName();
+  const callerDir = path.dirname(caller);
+  const fileName = path.resolve(callerDir, file);
+  const fileContents = fs.readFileSync(fileName, 'utf-8');
 
-include = function (file) {
+  /**
+   * vm.Script.runInThisContext to the rescue! eval() would not set lexical
+   * globals:
+   *
+   * https://stackoverflow.com/questions/62335897/can-eval-be-used-to-declare-multiple-global-classes/62353952#62353952
+   */
+  new vm.Script(fileContents).runInThisContext();
+};
 
-    /**
-     * handle relative filepaths
-     * need to get caller function with
-     * `callsite[1].getFileName()`
-     */
+/**
+ * Uncomment when vm.Module reaches LTS stability.
+ */
+// includeModule = (file) => {
+//   /**
+//    * Have to repeat this. Rather hacky, but whatever works.
+//    */
+//   const stack = callsite();
+//   const caller = stack[1].getFileName();
+//   const callerDir = path.dirname(caller);
+//   const fileName = path.resolve(callerDir, file);
+//   const fileContents = fs.readFileSync(fileName, 'utf-8');
 
-    let stack = callsite(),
-        caller = stack[1].getFileName(),
-        callerDir = path.dirname(caller),
-        fileName = path.resolve(callerDir, file),
-        fileContents = fs.readFileSync(fileName, 'utf-8');
+//   console.log(vm.SourceTextModule);
+//   new vm.SourceTextModule(fileContents).evaluate();
+// };
 
-    /**
-     * vm.Script.runInThisContext to the rescue!
-     * eval() would not set lexical globals:
-     * 
-     * https://stackoverflow.com/questions/62335897/can-eval-be-used-to-declare-multiple-global-classes/62353952#62353952
-     */
-
-    new Script(fileContents).runInThisContext();
-}
 
 // export `execute` for CLI ops in Node
-const execute = require('./bin/execute.js');
-module.exports = execute;
+module.exports = require('./bin/execute.js');

@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+/** @license MIT */
+
 const execute = require('./execute');
 
 // load runtime
