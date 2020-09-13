@@ -35,6 +35,7 @@ for (const prop in window) {
 /**
  * Global non-enumerable properties.
  */
+HTMLElement = window.HTMLElement.bind(window);
 Event = window.Event.bind(window);
 requestAnimationFrame = (fn) => setTimeout(fn, 0);
 cancelAnimationFrame = (key) => clearTimeout(key);
