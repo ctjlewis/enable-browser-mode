@@ -1,6 +1,6 @@
 {
   "name": "enable-browser-mode",
-  "version": "1.35.0",
+  "version": "1.36.0",
   "description": "Simulate the browser with ease by setting the global object to a JSDOM window and painlessly run browser JS without errors.",
   "main": "index.js",
   "preferGlobal": true,
@@ -19,7 +19,7 @@
     "window"
   ],
   "author": "Christian Lewis <hello@trytelework.com>",
-  "license": "SEE LICENSE IN .LICENSE/LICENSE",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/TeleworkInc/enable-browser-mode/issues"
   },
